@@ -29,21 +29,21 @@ function MainPage() {
       <h2>Formulário de inscrição</h2>
 
       <Form onSubmit={handleClick}>
-        <label for="nome">Nome:</label>
+        <label htmlFor="nome">Nome:</label>
         <Input 
           id="nome"
           value={nome}
           onChange={onChangeNome}
         />
 
-        <label for="idade">Idade:</label>
+        <label htmlFor="idade">Idade:</label>
         <Input 
           id="idade"
           value={idade}
           onChange={onChangeIdade}
         />
 
-        <label for="email">E-mail:</label>
+        <label htmlFor="email">E-mail:</label>
         <Input 
           id="email"
           value={email}
