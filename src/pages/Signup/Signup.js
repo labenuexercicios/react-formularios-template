@@ -1,62 +1,67 @@
-import React, { useState } from 'react'
 import { ContainerForm, ContainerSignup, Input } from './styled'
+import useForm from '../../hooks/useForm'
 
 export default function Signup() {
-    const [nomeUsuario, setNomeUsuario] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    const [confirmaSenha, setConfirmaSenha] = useState("")
 
-    const onChangeNome = (e) => {
-        setNomeUsuario(e.target.value)
-    }
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value)
-    }
-    const onChangeSenha = (e) => {
-        setSenha(e.target.value)
-    }
-    const onChangeConfirmaSenha = (e) => {
-        setConfirmaSenha(e.target.value)
-    }
 
-    const enviarCadastro = () => {
-        //* EXTRA: validando a senha - ter certeza que o usuário sabe qual senha cadastrou
-        if (senha === confirmaSenha) {
-            console.log({nomeUsuario, email, senha, confirmaSenha})
-        }
-    }
+    const {form, onChangeInputs, cleanInputs} = useForm({nome:"", email:"", senha: "", confirmaSenha:""}) // recebi do useform as funcoes e estado form, e passei os parametros necessarios.
+
+   
+     const enviaLogin = (e) => {
+    e.preventDefault() // prevencao para que a pagina nao recarregue automaticamente (comportamento padrao)
+        
+       if (form.senha === form.confirmaSenha){
+       console.log(form) // console com informacoes passadas no onsubmit do input
+        cleanInputs() // funcao feita no useForm para limpar input   
+        alert("Cadastrado com sucesso! :)")
+       } else {
+        alert("Por favor, confirme sua senha corretamente!")
+       }
+     }
+
+
 
     return (
         <ContainerSignup>
-            <ContainerForm onSubmit={enviarCadastro}>
+            <ContainerForm onSubmit={enviaLogin}>
                 <label htmlFor='nome'>Nome de usuario:</label>
                 <Input
+                    name='nome'
                     id='nome'
-                    value={nomeUsuario}
-                    onChange={onChangeNome}
-                    placeholder="username"
+                    value={form.nome}
+                    onChange={onChangeInputs}
+                    placeholder="Username"
+                    required
                 />
                 <label htmlFor='email'>Email:</label>
                 <Input
+                    name='email'
                     id='email'
-                    value={email}
-                    onChange={onChangeEmail}
+                    value={form.email}
+                    onChange={onChangeInputs}
                     placeholder="nome@email.com"
+                    type='email'
+                    required
                 />
                 <label htmlFor='senha'>Senha:</label>
                 <Input
+                     name='senha'
                     id='senha'
-                    value={senha}
-                    onChange={onChangeSenha}
+                    value={form.senha}
+                    onChange={onChangeInputs}
                     placeholder="Crie sua senha"
+                    type='password'
+                    required
                 />
                 <label htmlFor='confirma-senha'>Confirmação de senha:</label>
                 <Input
+                    name='confirmaSenha'
                     id='confirma-senha'
-                    value={confirmaSenha}
-                    onChange={onChangeConfirmaSenha}
+                    value={form.confirmaSenha}
+                    onChange={onChangeInputs}
                     placeholder="Confirme a senha"
+                    type='password'
+                    required
                 />
                 <button>Cadastrar</button>
             </ContainerForm>
